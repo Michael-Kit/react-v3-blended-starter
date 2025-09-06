@@ -2,24 +2,22 @@ import style from "./Text.module.css";
 
 interface TextProps {
   children: React.ReactNode;
-  textAlign?: string;
-  marginBottom?: string;
+  textAlign?: "start" | "end" | "center" | "justify";
+  marginBottom?: "0" | "10" | "20";
 }
 
 export default function Text({
   children,
-  textAlign = "",
+  textAlign = "start",
   marginBottom = "0",
 }: TextProps) {
-  return (
-    <p
-      className={[
-        style["text"],
-        style[textAlign],
-        style[`marginBottom${marginBottom}`],
-      ].join(" ")}
-    >
-      {children}
-    </p>
-  );
+  const classNames = [
+    style.text,
+    textAlign && style[textAlign],
+    marginBottom && style[`marginBottom${marginBottom}`],
+  ]
+    .filter(Boolean)
+    .join(" ");
+
+  return <p className={classNames}>{children}</p>;
 }

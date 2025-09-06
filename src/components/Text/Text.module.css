@@ -5,15 +5,15 @@
   text-align: start;
 }
 .end {
-  composes: text;
+  text-align: text;
   text-align: end;
 }
 .center {
-  composes: text;
+  text-align: text;
   text-align: center;
 }
 .justify {
-  composes: text;
+  text-align: text;
   text-align: justify;
 }
 
