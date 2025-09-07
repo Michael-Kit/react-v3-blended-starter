@@ -19,9 +19,17 @@ export default function App() {
   const handleSearch = async (query: string) => {
     setIsLoading(true);
     setIsError(false);
+    setPhotos([]);
 
     try {
       const results = await fetchPhotosByQuery(query);
+      console.log("Results:", results);
+
+      // трактуємо порожній масив як помилку згідно з ТЗ
+      if (results.length === 0) {
+        throw new Error("No photos found");
+      }
+
       setPhotos(results);
     } catch (error) {
       console.error("Fetch error:", error);
@@ -48,11 +56,12 @@ export default function App() {
           <Form onSubmit={handleSearch} />
 
           {isLoading && <Loader />}
+
           {isError && (
-  <Text textAlign="center" marginBottom="20">
-    Something went wrong. Please try again.
-  </Text>
-)}
+            <Text textAlign="center" marginBottom="20">
+              Something went wrong. Please try again.
+            </Text>
+          )}
 
           {photos.length > 0 && (
             <PhotosGallery photos={photos} onPhotoClick={openModal} />
